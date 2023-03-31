@@ -758,7 +758,7 @@ texttype(Text *t, Rune r)
 		q0 = textbacknl(t, t->org, n);
 		textsetorigin(t, q0, TRUE);
 		return;
-	case Khome:
+/*	case Khome:
 		typecommit(t);
 		if(t->org > t->iq1) {
 			q0 = textbacknl(t, t->iq1, 1);
@@ -777,8 +777,9 @@ texttype(Text *t, Rune r)
 			textsetorigin(t, q0, TRUE);
 		} else
 			textshow(t, t->file->b.nc, t->file->b.nc, FALSE);
-		return;
+		return;*/
 	case 0x01:	/* ^A: beginning of line */
+	case Khome:
 		typecommit(t);
 		/* go to where ^U would erase, if not already at BOL */
 		nnb = 0;
@@ -787,6 +788,7 @@ texttype(Text *t, Rune r)
 		textshow(t, t->q0-nnb, t->q0-nnb, TRUE);
 		return;
 	case 0x05:	/* ^E: end of line */
+	case Kend:
 		typecommit(t);
 		q0 = t->q0;
 		while(q0<t->file->b.nc && textreadc(t, q0)!='\n')
